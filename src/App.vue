@@ -1,11 +1,13 @@
 <script>
   import Navbar from "./components/Navbar.vue";
   import Tasks from "./components/Tasks.vue";
+  import Form from "./components/Form.vue";
 
   export default {
     name: "App",
     components: {
       Navbar,
+      Form,
       Tasks,
     },
     data() {
@@ -29,12 +31,21 @@
         ],
       };
     },
+    methods: {
+      addTask(task) {
+        this.tasks = [task, ...this.tasks];
+      },
+      deleteTask(index) {
+        this.tasks.splice(index, 1);
+      },
+    },
   };
 </script>
 
 <template>
   <Navbar />
-  <Tasks :tasks="tasks" />
+  <Form @add-task="addTask" />
+  <Tasks :tasks="tasks" @delete-task="deleteTask" />
 </template>
 
 <style></style>
