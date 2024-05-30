@@ -1,5 +1,5 @@
 <template>
-  <button>{{ title }}</button>
+  <button v-bind:style="{ background: color }">{{ title }}</button>
 </template>
 
 <script>
@@ -7,6 +7,7 @@
     name: "Button",
     props: {
       title: String,
+      color: String,
     },
   };
 </script>
@@ -16,5 +17,8 @@
     font-size: 18px;
     padding: 7px 15px;
     cursor: pointer;
+    border: none;
+    outline: none;
+    color: white;
   }
 </style>

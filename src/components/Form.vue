@@ -1,5 +1,5 @@
 <template>
-  <form @submit="submitForm">
+  <form @submit="submitForm" v-bind:class="toggle ? '' : 'hide'">
     <label for="">Task</label>
     <input type="text" placeholder="Enter Task" v-model="text" />
     <label for="">Reminder</label>
@@ -14,6 +14,9 @@
 <script>
   export default {
     name: "Form",
+    props: {
+      toggle: String,
+    },
     data() {
       return {
         text: "",
@@ -76,5 +79,8 @@
     cursor: pointer;
     color: white;
     background: black;
+  }
+  .hide {
+    display: none;
   }
 </style>

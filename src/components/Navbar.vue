@@ -6,7 +6,11 @@
     </div>
     <div class="nav">
       <h2>Toggle Form</h2>
-      <Button title="Open" color="green" />
+      <Button
+        @click="toggleForm()"
+        v-bind:title="toggle ? 'close' : 'open'"
+        v-bind:color="toggle ? 'red' : 'green'"
+      />
     </div>
   </div>
 </template>
@@ -20,6 +24,13 @@
     },
     props: {
       title: String,
+      color: String,
+      toggle: Boolean,
+    },
+    methods: {
+      toggleForm() {
+        this.$emit("toggle-form");
+      },
     },
   };
 </script>

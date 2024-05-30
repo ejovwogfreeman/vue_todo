@@ -1,7 +1,13 @@
 <template>
   <div class="task-container">
-    <div v-for="(task, index) in tasks" :key="index">
-      <section class="div">
+    <p v-if="tasks.length <= 0">No task to show</p>
+    <div
+      v-for="(task, index) in tasks"
+      :key="index"
+      v-bind:class="task.reminder ? 'reminder' : 'div'"
+      @dblclick="setReminder(index)"
+    >
+      <section>
         <h3>{{ task.text }}</h3>
         <span @click="deleteTask(index)">x</span>
       </section>
@@ -23,6 +29,9 @@
       deleteTask(index) {
         this.$emit("delete-task", index);
       },
+      setReminder(index) {
+        this.$emit("set-reminder", index);
+      },
     },
   };
 </script>
@@ -34,10 +43,17 @@
     margin-top: 20px;
   }
 
-  .task-container div {
+  .div {
     border: 1px solid rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
     padding: 20px;
+  }
+
+  .reminder {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-left: 3px solid green;
   }
 
   .task-container div section {

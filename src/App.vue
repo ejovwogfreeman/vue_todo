@@ -12,40 +12,40 @@
     },
     data() {
       return {
-        tasks: [
-          {
-            text: "Meeting with doctor",
-            date: "jun 5th 2024",
-            remider: true,
-          },
-          {
-            text: "Sudy vue js all day",
-            date: "jun 6th 2024",
-            remider: true,
-          },
-          {
-            text: "Study Github",
-            date: "july 20th 2024",
-            remider: false,
-          },
-        ],
+        reminder: false,
+        toggle: false,
+        tasks: JSON.parse(localStorage.getItem("tasks")) || [],
       };
     },
     methods: {
       addTask(task) {
         this.tasks = [task, ...this.tasks];
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
       },
       deleteTask(index) {
         this.tasks.splice(index, 1);
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+      },
+      setReminder(index) {
+        this.tasks[index].reminder = !this.tasks[index].reminder;
+        localStorage.setItem("tasks", JSON.stringify(this.tasks));
+      },
+      toggleForm() {
+        this.toggle = !this.toggle;
       },
     },
   };
 </script>
 
 <template>
-  <Navbar />
-  <Form @add-task="addTask" />
-  <Tasks :tasks="tasks" @delete-task="deleteTask" />
+  <Navbar v-bind:toggle="toggle" @toggle-form="toggleForm" />
+  <Form @add-task="addTask" :toggle="toggle" />
+  <Tasks
+    :tasks="tasks"
+    @delete-task="deleteTask"
+    @set-reminder="setReminder"
+    v-bind:reminder="reminder"
+  />
 </template>
 
 <style></style>
